@@ -3,17 +3,25 @@ package com.ms.tdd.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ms.tdd.TddApplicationTests;
 import com.ms.tdd.model.Client;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.swing.*;
+@SpringBootTest
+@ActiveProfiles("test")
 public class ClientControllerTests extends TddApplicationTests {
 
     private MockMvc mockMvc;
@@ -30,10 +38,13 @@ public class ClientControllerTests extends TddApplicationTests {
     @Test
     @Order(0)
     public void testCreateClient() throws Exception {
+
+        Client newClient = new Client(null, "Neuber", "neuber.paiva@gmail.com", "9994545429", "440120165656");
+
         this.mockMvc.perform( MockMvcRequestBuilders
                         .post("/clients")
-                        .content(asJsonString(new Client(null, "Neuber", "neuber.paiva@gmail.com", "9994545429", "440120165656")))
                         .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(newClient))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
@@ -41,7 +52,7 @@ public class ClientControllerTests extends TddApplicationTests {
 
     @Test
     @Order(1)
-    public void testClientList() throws Exception {
+    public void testClientFindAll() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/clients"))
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -53,7 +64,7 @@ public class ClientControllerTests extends TddApplicationTests {
     @Test
     @Order(2)
     public void testFindById() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/clients/65eb1173a897f047b91931f1"))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/clients/65eb40c7d493a49dab2b05e6"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
@@ -63,11 +74,10 @@ public class ClientControllerTests extends TddApplicationTests {
 
     @Test
     @Order(3)
-    public void testUpdateClient() throws Exception
-    {
+    public void testUpdateClient() throws Exception {
         this.mockMvc.perform( MockMvcRequestBuilders
-                        .put("/clients/65eb1e48c3eec3070250ff85")
-                        .content(asJsonString(new Client(null, "Neuber02", "neuber.p@gmail.com", "24394545429", "440120165656")))
+                        .put("/clients/65eb40c7d493a49dab2b05e6")
+                        .content(asJsonString(new Client(null, "Maria", "maria.p@gmail.com", "24394545429", "440120165656")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -76,10 +86,24 @@ public class ClientControllerTests extends TddApplicationTests {
 
     @Test
     @Order(4)
-    public void testDeleteClient() throws Exception
-    {
+    public void testDeleteClient() throws Exception {
+        Client newClient = new Client(null, "Neuber", "neuber.paiva@gmail.com", "9994545429", "440120165656");
+
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
+                        .post("/clients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(newClient))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+        JSONObject jsonObject = new JSONObject(response);
+        String clientId = jsonObject.getString("id");
+
         this.mockMvc.perform( MockMvcRequestBuilders
-                        .delete("/clients/65eb211bc7eb7f0c81495408")
+                        .delete("/clients/" + clientId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -93,7 +117,6 @@ public class ClientControllerTests extends TddApplicationTests {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }
