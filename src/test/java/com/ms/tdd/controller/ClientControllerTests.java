@@ -64,7 +64,7 @@ public class ClientControllerTests extends TddApplicationTests {
     @Test
     @Order(2)
     public void testFindById() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/clients/65eb40c7d493a49dab2b05e6"))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/clients/65eb4868834258243e92c629"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
@@ -76,7 +76,7 @@ public class ClientControllerTests extends TddApplicationTests {
     @Order(3)
     public void testUpdateClient() throws Exception {
         this.mockMvc.perform( MockMvcRequestBuilders
-                        .put("/clients/65eb40c7d493a49dab2b05e6")
+                        .put("/clients/65eb4868834258243e92c629")
                         .content(asJsonString(new Client(null, "Maria", "maria.p@gmail.com", "24394545429", "440120165656")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
