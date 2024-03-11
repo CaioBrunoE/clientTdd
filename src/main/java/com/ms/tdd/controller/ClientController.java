@@ -48,6 +48,5 @@ public class ClientController {
     @DeleteMapping(value="/{id}")
     public void  delete(@PathVariable String id){
       service.delete(id);
-
     }
 }
