@@ -5,6 +5,7 @@ import com.ms.tdd.model.Client;
 import com.ms.tdd.repository.ClientRepository;
 import com.ms.tdd.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,13 +39,13 @@ public class ClientController {
     @GetMapping(value="/{id}")
     public ResponseEntity<ClientDTO> FindById(@PathVariable String id){
 
-        return  service.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body( service.findById(id));
     }
 
     @PutMapping(value="/{id}")
-    public Client updateById(@PathVariable String id , @RequestBody Client client){
+    public ResponseEntity<ClientDTO> updateById(@PathVariable String id , @RequestBody ClientDTO clientDTO){
 
-     return service.update(id, client);
+     return ResponseEntity.status(HttpStatus.OK).body(service.update(id, clientDTO));
 
     }
 

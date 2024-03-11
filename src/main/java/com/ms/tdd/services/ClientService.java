@@ -33,24 +33,34 @@ public class ClientService {
 
     }
 
-    public Client findById(String id) {
-        return repository.findById(id).get();
+    public ClientDTO findById(String id) {
+
+        Client client =  repository.findById(id).get();
+
+        ClientDTO clientDTO = new ClientDTO(client);
+
+        return clientDTO;
     }
 
-    public Client update(String id , Client client){
+    public ClientDTO update(String id , ClientDTO clientDTO){
 
-        Client entity =  repository.findById(id).get();
+        Client entity = repository.findById(id).get();
 
-        entity.setName(client.getName());
-        entity.setEmail(client.getEmail());
-        entity.setCel(client.getCel());
-        entity.setCpf(client.getCpf());
+        entity.setName(clientDTO.getName());
+        entity.setCel(clientDTO.getCel());
+        entity.setEmail(clientDTO.getEmail());
+        entity.setCpf(clientDTO.getCpf());
 
-        return  repository.save(entity);
+        repository.save(entity);
+
+        ClientDTO newClientDTO = new ClientDTO(entity);
+
+        return newClientDTO;
     }
 
     public void delete(String id) {
         Client entity  = repository.findById(id).get();
-       repository.delete(entity);
+        repository.delete(entity);
+
     }
 }
