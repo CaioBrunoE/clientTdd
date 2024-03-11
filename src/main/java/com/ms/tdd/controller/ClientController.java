@@ -1,15 +1,17 @@
 package com.ms.tdd.controller;
 
+import com.ms.tdd.dto.ClientDTO;
 import com.ms.tdd.model.Client;
 import com.ms.tdd.repository.ClientRepository;
 import com.ms.tdd.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("api/clients")
 public class ClientController {
 
     @Autowired
@@ -19,8 +21,8 @@ public class ClientController {
     ClientRepository repository;
 
     @GetMapping
-    public List<Client> FindAll() {
-        return service.findAll();
+    public ResponseEntity<List<ClientDTO>> FindAll() {
+        return ResponseEntity.ok(service.findAll());
         /*return Arrays.asList(Client.builder().
                 name("Neuber")
                 .email("neuber.paiva@gmail.com")
@@ -28,13 +30,14 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client create(@RequestBody Client entity) {
+    public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO entity) {
         //entity.setId(ObjectId.get().toString());
-        return service.create(entity);
+        return ResponseEntity.ok().body(service.create(entity));
     }
 
     @GetMapping(value="/{id}")
-    public Client FindById(@PathVariable String id){
+    public ResponseEntity<ClientDTO> FindById(@PathVariable String id){
+
         return  service.findById(id);
     }
 

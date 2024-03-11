@@ -1,5 +1,6 @@
 package com.ms.tdd.services;
 
+import com.ms.tdd.dto.ClientDTO;
 import com.ms.tdd.model.Client;
 import com.ms.tdd.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,22 @@ public class ClientService {
     @Autowired
     ClientRepository repository;
 
-    public List<Client> findAll() {
-        return repository.findAll();
+    public List<ClientDTO> findAll() {
+        List<Client> listEntidade = repository.findAll();
+        List<ClientDTO> listDTO = listEntidade.stream().map(x -> new ClientDTO(x)).toList();
+        return listDTO ;
+
     }
 
 
-    public Client create(Client entity) {
-        return repository.save(entity);
+    public ClientDTO create(ClientDTO entity) {
+        Client client = new Client(entity);
+
+        repository.save(client);
+
+        ClientDTO clientDTO = new ClientDTO(client);
+
+        return clientDTO;
 
     }
 
