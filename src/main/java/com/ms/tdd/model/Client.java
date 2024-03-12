@@ -24,7 +24,6 @@ public class Client implements Serializable {
     private String created;
     private String updated;
     private String user;
-
  */
     public Client (ClientDTO entidadeDTO){
         BeanUtils.copyProperties(entidadeDTO, this);

@@ -1,7 +1,6 @@
 package com.ms.tdd.controller;
 
 import com.ms.tdd.dto.ClientDTO;
-import com.ms.tdd.model.Client;
 import com.ms.tdd.repository.ClientRepository;
 import com.ms.tdd.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
