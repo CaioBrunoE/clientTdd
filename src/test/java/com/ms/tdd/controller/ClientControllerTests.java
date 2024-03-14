@@ -40,7 +40,7 @@ public class ClientControllerTests extends TddApplicationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(clientDTO))
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
     }
 

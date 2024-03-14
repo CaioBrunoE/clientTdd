@@ -17,21 +17,22 @@ public class ClientService {
     public List<ClientDTO> findAll() {
         List<Client> list = repository.findAll();
         List<ClientDTO> listDTO = list.stream().map(ClientDTO::new).toList();
-        return listDTO ;
+        return listDTO;
     }
 
     public ClientDTO create(ClientDTO clientDTO) {
+
         Client entity = new Client(clientDTO);
         repository.save(entity);
         return new ClientDTO(entity);
     }
 
     public ClientDTO findById(String id) {
-        Client entity =  repository.findById(id).get();
+        Client entity = repository.findById(id).get();
         return new ClientDTO(entity);
     }
 
-    public ClientDTO update(String id , ClientDTO clientDTO){
+    public ClientDTO update(String id, ClientDTO clientDTO) {
         Client entity = repository.findById(id).get();
         entity.setName(clientDTO.getName());
         entity.setCel(clientDTO.getCel());

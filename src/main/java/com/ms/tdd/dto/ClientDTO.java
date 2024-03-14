@@ -1,5 +1,7 @@
 package com.ms.tdd.dto;
 
+import com.mongodb.lang.NonNull;
+import com.mongodb.lang.Nullable;
 import com.ms.tdd.model.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +16,14 @@ import java.io.Serializable;
 public class ClientDTO implements Serializable {
 
     private String id;
+    @NonNull
     private String name;
+    @NonNull
     private String email;
+    @NonNull
     private String cel;
+    @NonNull
     private String cpf;
-
 
     public  ClientDTO (Client entity){
         BeanUtils.copyProperties(entity, this);

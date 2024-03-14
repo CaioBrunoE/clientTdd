@@ -1,8 +1,10 @@
 package com.ms.tdd.model;
+import com.mongodb.lang.Nullable;
 import com.ms.tdd.dto.ClientDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

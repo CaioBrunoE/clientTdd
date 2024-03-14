@@ -29,7 +29,7 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-	//testImplementation("junit:junit:4.13.2")
+    //testImplementation("junit:junit:4.13.2")
 }
 
 tasks.withType<Test> {
