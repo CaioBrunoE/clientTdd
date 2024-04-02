@@ -1,11 +1,10 @@
-package com.ms.tdd;
+package com.ms.client;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
-@SpringBootTest(classes = TddApplication.class)
-public class TddApplicationTests {
+@SpringBootTest(classes = ClientApplication.class)
+public class ClientApplicationTests {
 
 	@Test
 	public void contextLoads() {
